@@ -1,0 +1,3 @@
+- b1: Pull repo
+- b2: chạy lệnh npm install
+- b3: chạy lệnh npm run dev
