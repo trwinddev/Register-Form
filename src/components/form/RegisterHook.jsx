@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import InputHook from "../input/InputHook";
+import RadioHook from "../radio/RadioHook";
 
 const RegisterHook = () => {
   const {
@@ -53,6 +54,23 @@ const RegisterHook = () => {
           id="password"
           control={control}
         ></InputHook>
+      </div>
+      <div className="flex flex-col gap-3 mb-5">
+        <label className="cursor-pointer">Gender</label>
+        <div className="flex items-center gap-5">
+          <div className="flex items-center gap-x-3">
+            <RadioHook control={control} name="gender" value="male"></RadioHook>
+            <span>Male</span>
+          </div>
+          <div className="flex items-center gap-x-3">
+            <RadioHook
+              control={control}
+              name="gender"
+              value="female"
+            ></RadioHook>
+            <span>Female</span>
+          </div>
+        </div>
       </div>
       <button className="w-full bg-blue-500 rounded-lg p-5 mt-5 font-semibold text-white">
         Submit
