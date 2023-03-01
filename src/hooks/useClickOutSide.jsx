@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function useClickOutSide(dom) {
+export default function useClickOutSide(dom = "button") {
   const [show, setShow] = useState(false);
   const nodeRef = useRef(null);
   useEffect(() => {
@@ -10,7 +10,7 @@ export default function useClickOutSide(dom) {
         !nodeRef.current.contains(e.target) &&
         !e.target.matches(dom)
       ) {
-        setShow(true);
+        setShow(false);
       }
     }
     document.addEventListener("click", handleClickOutSide);
