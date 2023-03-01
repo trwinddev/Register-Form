@@ -4,6 +4,38 @@ import CheckboxHook from "../checkbox/CheckboxHook";
 import DropdownHook from "../dropdown/DropdownHook";
 import InputHook from "../input/InputHook";
 import RadioHook from "../radio/RadioHook";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    username: yup.string().required("Please enter your username"),
+    email: yup
+      .string()
+      .email("Please enter valid email address")
+      .required("Please enter your email address"),
+    password: yup
+      .string()
+      .min(8, "Your password must be at least 8 character")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        {
+          message:
+            "Your password at least 1 uppercase letter, 1 number,1 special character",
+        }
+      )
+      .required("Please enter your username"),
+    gender: yup
+      .string()
+      .required("Please select your gender")
+      .oneOf(["male, female"], "You can only select male or female"),
+    job: yup
+      .string()
+      .required("Please select your job")
+      .oneOf(["teacher,developer, doctor"]),
+    term: yup.boolean().required("Please check the term"),
+  })
+  .required();
 
 const dropdownData = [
   {
@@ -30,7 +62,13 @@ const RegisterHook = () => {
     control,
     setValue,
     getValues,
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  console.log(
+    "🚀 ~ file: RegisterHook.jsx:38 ~ RegisterHook ~ errors:",
+    errors
+  );
   const onSubmitHandler = (values) => {
     console.log(values);
   };
@@ -51,7 +89,9 @@ const RegisterHook = () => {
           id="username"
           control={control}
         ></InputHook>
-        <p className="text-red-500 text-sm">Please enter your name</p>
+        {errors.username && (
+          <p className="text-red-500 text-sm">{errors.username.message}</p>
+        )}
       </div>
       <div className="flex flex-col gap-3 mb-5">
         <label htmlFor="email" className="cursor-pointer">
@@ -64,6 +104,9 @@ const RegisterHook = () => {
           id="email"
           control={control}
         ></InputHook>
+        {errors.email && (
+          <p className="text-red-500 text-sm">{errors.email.message}</p>
+        )}
       </div>
       <div className="flex flex-col gap-3 mb-5">
         <label htmlFor="password" className="cursor-pointer">
@@ -76,6 +119,9 @@ const RegisterHook = () => {
           id="password"
           control={control}
         ></InputHook>
+        {errors.password && (
+          <p className="text-red-500 text-sm">{errors.password.message}</p>
+        )}
       </div>
       <div className="flex flex-col gap-3 mb-5">
         <label className="cursor-pointer">Gender</label>
@@ -93,6 +139,9 @@ const RegisterHook = () => {
             <span>Female</span>
           </div>
         </div>
+        {errors.gender && (
+          <p className="text-red-500 text-sm">{errors.gender.message}</p>
+        )}
       </div>
       <div className="flex flex-col gap-3 mb-5">
         <label className="cursor-pointer">Are you</label>
@@ -101,7 +150,11 @@ const RegisterHook = () => {
           setValue={setValue}
           name="job"
           data={dropdownData}
+          dropdownLabel="Select your job"
         ></DropdownHook>
+        {errors.job && (
+          <p className="text-sm text-red-500">{errors.job.message}</p>
+        )}
       </div>
       <div className="">
         <CheckboxHook
@@ -109,8 +162,10 @@ const RegisterHook = () => {
           text="I accept the terms and conditions"
           name="term"
         ></CheckboxHook>
+        {errors.term && (
+          <p className="text-red-500 text-sm">{errors.term.message}</p>
+        )}
       </div>
-
       <button className="w-full bg-blue-500 rounded-lg p-5 mt-5 font-semibold text-white">
         Submit
       </button>
