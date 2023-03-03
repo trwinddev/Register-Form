@@ -58,13 +58,18 @@ const dropdownData = [
 const RegisterHook = () => {
   const {
     handleSubmit,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isValid, isSubmitting, isSubmitSuccessful },
     control,
     setValue,
     getValues,
+    reset,
+    watch,
   } = useForm({
-    // resolver: yupResolver(schema),
+    resolver: yupResolver(schema),
     mode: "onChange",
+    defaultValues: {
+      gender: "male",
+    },
   });
 
   const onSubmitHandler = (values) => {
@@ -72,10 +77,24 @@ const RegisterHook = () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve();
+        reset({
+          username: "",
+          email: "",
+          password: "",
+          gender: "male",
+          job: "",
+          term: false,
+        });
         console.log(values);
-      }, 3000);
+      }, 2000);
     });
   };
+  const watchGender = watch("gender");
+  console.log(
+    "🚀 ~ file: RegisterHook.jsx:93 ~ RegisterHook ~ watchGender:",
+    watchGender
+  );
+
   return (
     <form
       onSubmit={handleSubmit(onSubmitHandler)}
@@ -131,7 +150,12 @@ const RegisterHook = () => {
         <label className="cursor-pointer">Gender</label>
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-x-3">
-            <RadioHook control={control} name="gender" value="male"></RadioHook>
+            <RadioHook
+              control={control}
+              name="gender"
+              value="male"
+              checked={watchGender === "male"}
+            ></RadioHook>
             <span>Male</span>
           </div>
           <div className="flex items-center gap-x-3">
@@ -139,6 +163,7 @@ const RegisterHook = () => {
               control={control}
               name="gender"
               value="female"
+              checked={watchGender === "female"}
             ></RadioHook>
             <span>Female</span>
           </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWatch } from "react-hook-form";
 import useClickOutSide from "../../hooks/useClickOutSide";
 
@@ -10,7 +10,7 @@ const DropdownHook = ({
   dropdownLabel = "Select your job",
 }) => {
   const { show, setShow, nodeRef } = useClickOutSide();
-  useWatch({
+  const dropdownValue = useWatch({
     control,
     name: "job",
     defaultValue: "",
@@ -22,6 +22,9 @@ const DropdownHook = ({
     setLabel(e.target.textContent);
   };
   const [label, setLabel] = useState(dropdownLabel);
+  useEffect(() => {
+    if (dropdownValue === "") setLabel(dropdownLabel);
+  }, [dropdownValue]);
 
   return (
     <div className="relative" ref={nodeRef}>
