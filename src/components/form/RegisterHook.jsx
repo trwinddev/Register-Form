@@ -28,11 +28,11 @@ const schema = yup
     gender: yup
       .string()
       .required("Please select your gender")
-      .oneOf(["male, female"], "You can only select male or female"),
+      .oneOf(["male", "female"], "You can only select male or female"),
     job: yup
       .string()
       .required("Please select your job")
-      .oneOf(["teacher,developer, doctor"]),
+      .oneOf(["teacher", "developer", "doctor"]),
     term: yup.boolean().required("Please check the term"),
   })
   .required();
@@ -58,19 +58,23 @@ const dropdownData = [
 const RegisterHook = () => {
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid, isSubmitting },
     control,
     setValue,
     getValues,
   } = useForm({
-    resolver: yupResolver(schema),
+    // resolver: yupResolver(schema),
+    mode: "onChange",
   });
-  console.log(
-    "🚀 ~ file: RegisterHook.jsx:38 ~ RegisterHook ~ errors:",
-    errors
-  );
+
   const onSubmitHandler = (values) => {
-    console.log(values);
+    if (!isValid) return;
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve();
+        console.log(values);
+      }, 3000);
+    });
   };
   return (
     <form
@@ -140,7 +144,7 @@ const RegisterHook = () => {
           </div>
         </div>
         {errors.gender && (
-          <p className="text-red-500 text-sm">{errors.gender.message}</p>
+          <p className="text-sm text-red-500">{errors.gender.message}</p>
         )}
       </div>
       <div className="flex flex-col gap-3 mb-5">
@@ -166,8 +170,17 @@ const RegisterHook = () => {
           <p className="text-red-500 text-sm">{errors.term.message}</p>
         )}
       </div>
-      <button className="w-full bg-blue-500 rounded-lg p-5 mt-5 font-semibold text-white">
-        Submit
+      <button
+        className={`w-full bg-blue-500 rounded-lg p-5 mt-5 font-semibold text-white ${
+          isSubmitting ? "opacity-50" : ""
+        }`}
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? (
+          <div className="h-5 w-5 rounded-full border-4 border-t-4 border-white border-t-transparent animate-spin mx-auto"></div>
+        ) : (
+          "Submit"
+        )}
       </button>
     </form>
   );
