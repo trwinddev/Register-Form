@@ -6,6 +6,7 @@ import InputHook from "../input/InputHook";
 import RadioHook from "../radio/RadioHook";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import InputFormik from "../input/InputFormik";
 
 const schema = yup
   .object({
@@ -105,13 +106,7 @@ const RegisterHook = () => {
         <label htmlFor="username" className="cursor-pointer">
           Username
         </label>
-        <InputHook
-          type="text"
-          name="username"
-          placeholder="Enter your username"
-          id="username"
-          control={control}
-        ></InputHook>
+        <InputFormik></InputFormik>
         {errors.username && (
           <p className="text-red-500 text-sm">{errors.username.message}</p>
         )}
