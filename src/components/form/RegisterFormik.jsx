@@ -3,6 +3,7 @@ import InputFormik from "../input/InputFormik";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import RadioFormik from "../radio/RadioFormik";
+import CheckboxFormik from "../checkbox/CheckboxFormik";
 
 const RegisterFormik = () => {
   return (
@@ -31,13 +32,16 @@ const RegisterFormik = () => {
               }
             )
             .required("Please enter your password"),
-          // gender: Yup.string()
-          //   .required("Please select your gender")
-          //   .oneOf(["male", "female"], "You can only select male or female"),
+          gender: Yup.string()
+            .required("Please select your gender")
+            .oneOf(["male", "female"], "You can only select male or female"),
           // job: Yup.string()
           //   .required("Please select your job")
           //   .oneOf(["teacher", "developer", "doctor"]),
-          // term: Yup.boolean().required("Please check the term"),
+          term: Yup.boolean().oneOf(
+            [true],
+            "Please check the term and conditions"
+          ),
         })}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -92,6 +96,9 @@ const RegisterFormik = () => {
                   ></RadioFormik>
                 </div>
               </div>
+              <CheckboxFormik name="term">
+                I accept the terms and conditions
+              </CheckboxFormik>
               <button className="w-full bg-blue-500 rounded-lg p-5 mt-5 font-semibold text-white ">
                 {formik.isSubmitting ? (
                   <div className="h-5 w-5 rounded-full border-4 border-t-4 border-white border-t-transparent animate-spin mx-auto"></div>
