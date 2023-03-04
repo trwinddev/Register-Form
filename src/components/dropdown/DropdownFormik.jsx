@@ -19,6 +19,10 @@ const DropdownFormik = ({
     setLabel(e.target.textContent);
   };
 
+  useEffect(() => {
+    if (field.value === "") setLabel(dropdownLabel);
+  }, [field.value]);
+
   return (
     <div className="flex flex-col gap-3 mb-5">
       <label className="cursor-pointer">{labelText}</label>

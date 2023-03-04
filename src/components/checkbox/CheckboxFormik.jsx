@@ -10,6 +10,7 @@ const CheckboxFormik = ({ children, ...props }) => {
           type="checkbox"
           className="hidden"
           id={props.name}
+          checked={field.value}
           {...field}
           {...props}
         />

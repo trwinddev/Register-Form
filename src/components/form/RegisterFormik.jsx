@@ -37,23 +37,23 @@ const RegisterFormik = () => {
           term: false,
         }}
         validationSchema={Yup.object({
-          // username: Yup.string().required("Please enter your username"),
-          // email: Yup.string()
-          //   .email("Please enter valid email address")
-          //   .required("Please enter your email address"),
-          // password: Yup.string()
-          //   .min(8, "Your password must be at least 8 character")
-          //   .matches(
-          //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-          //     {
-          //       message:
-          //         "Your password at least 1 uppercase letter, 1 number,1 special character",
-          //     }
-          //   )
-          //   .required("Please enter your password"),
-          // gender: Yup.string()
-          //   .required("Please select your gender")
-          //   .oneOf(["male", "female"], "You can only select male or female"),
+          username: Yup.string().required("Please enter your username"),
+          email: Yup.string()
+            .email("Please enter valid email address")
+            .required("Please enter your email address"),
+          password: Yup.string()
+            .min(8, "Your password must be at least 8 character")
+            .matches(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+              {
+                message:
+                  "Your password at least 1 uppercase letter, 1 number,1 special character",
+              }
+            )
+            .required("Please enter your password"),
+          gender: Yup.string()
+            .required("Please select your gender")
+            .oneOf(["male", "female"], "You can only select male or female"),
           job: Yup.string()
             .required("Please select your job")
             .oneOf(["teacher", "developer", "doctor"]),
@@ -62,10 +62,11 @@ const RegisterFormik = () => {
             "Please check the term and conditions"
           ),
         })}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values, { setSubmitting, resetForm }) => {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
+            resetForm();
           }, 2000);
         }}
       >
