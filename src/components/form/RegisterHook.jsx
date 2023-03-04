@@ -25,7 +25,7 @@ const schema = yup
             "Your password at least 1 uppercase letter, 1 number,1 special character",
         }
       )
-      .required("Please enter your username"),
+      .required("Please enter your password"),
     gender: yup
       .string()
       .required("Please select your gender")
