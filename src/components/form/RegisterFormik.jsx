@@ -48,10 +48,6 @@ const RegisterFormik = () => {
       >
         {(formik) => {
           const genderWatch = formik.values.gender;
-          console.log(
-            "🚀 ~ file: RegisterFormik.jsx:55 ~ RegisterFormik ~ genderWatch:",
-            genderWatch
-          );
           return (
             <form
               onSubmit={formik.handleSubmit}
@@ -82,22 +78,18 @@ const RegisterFormik = () => {
               <div className="flex flex-col gap-3 mb-5">
                 <label className="cursor-pointer">Gender</label>
                 <div className="flex items-center gap-5">
-                  <div className="flex items-center gap-x-3">
-                    <RadioFormik
-                      name="gender"
-                      value="male"
-                      checked={genderWatch === "male"}
-                    ></RadioFormik>
-                    <span>Male</span>
-                  </div>
-                  <div className="flex items-center gap-x-3">
-                    <RadioFormik
-                      name="gender"
-                      value="female"
-                      checked={genderWatch === "female"}
-                    ></RadioFormik>
-                    <span>Female</span>
-                  </div>
+                  <RadioFormik
+                    name="gender"
+                    value="male"
+                    checked={genderWatch === "male"}
+                    label="Male"
+                  ></RadioFormik>
+                  <RadioFormik
+                    name="gender"
+                    value="female"
+                    checked={genderWatch === "female"}
+                    label="Female"
+                  ></RadioFormik>
                 </div>
               </div>
               <button className="w-full bg-blue-500 rounded-lg p-5 mt-5 font-semibold text-white ">
