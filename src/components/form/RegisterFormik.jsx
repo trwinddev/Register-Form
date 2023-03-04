@@ -4,6 +4,25 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import RadioFormik from "../radio/RadioFormik";
 import CheckboxFormik from "../checkbox/CheckboxFormik";
+import DropdownFormik from "../dropdown/DropdownFormik";
+
+const dropdownData = [
+  {
+    id: 1,
+    value: "teacher",
+    text: "Teacher",
+  },
+  {
+    id: 2,
+    value: "developer",
+    text: "Developer",
+  },
+  {
+    id: 3,
+    value: "doctor",
+    text: "Doctor",
+  },
+];
 
 const RegisterFormik = () => {
   return (
@@ -18,26 +37,26 @@ const RegisterFormik = () => {
           term: false,
         }}
         validationSchema={Yup.object({
-          username: Yup.string().required("Please enter your username"),
-          email: Yup.string()
-            .email("Please enter valid email address")
-            .required("Please enter your email address"),
-          password: Yup.string()
-            .min(8, "Your password must be at least 8 character")
-            .matches(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              {
-                message:
-                  "Your password at least 1 uppercase letter, 1 number,1 special character",
-              }
-            )
-            .required("Please enter your password"),
-          gender: Yup.string()
-            .required("Please select your gender")
-            .oneOf(["male", "female"], "You can only select male or female"),
-          // job: Yup.string()
-          //   .required("Please select your job")
-          //   .oneOf(["teacher", "developer", "doctor"]),
+          // username: Yup.string().required("Please enter your username"),
+          // email: Yup.string()
+          //   .email("Please enter valid email address")
+          //   .required("Please enter your email address"),
+          // password: Yup.string()
+          //   .min(8, "Your password must be at least 8 character")
+          //   .matches(
+          //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+          //     {
+          //       message:
+          //         "Your password at least 1 uppercase letter, 1 number,1 special character",
+          //     }
+          //   )
+          //   .required("Please enter your password"),
+          // gender: Yup.string()
+          //   .required("Please select your gender")
+          //   .oneOf(["male", "female"], "You can only select male or female"),
+          job: Yup.string()
+            .required("Please select your job")
+            .oneOf(["teacher", "developer", "doctor"]),
           term: Yup.boolean().oneOf(
             [true],
             "Please check the term and conditions"
@@ -96,10 +115,20 @@ const RegisterFormik = () => {
                   ></RadioFormik>
                 </div>
               </div>
+              <DropdownFormik
+                labelText="Your job"
+                data={dropdownData}
+                name="job"
+                setValue={formik.setFieldValue}
+              ></DropdownFormik>
               <CheckboxFormik name="term">
                 I accept the terms and conditions
               </CheckboxFormik>
-              <button className="w-full bg-blue-500 rounded-lg p-5 mt-5 font-semibold text-white ">
+              <button
+                type="submit"
+                disabled={formik.isSubmitting}
+                className="w-full bg-blue-500 rounded-lg p-5 mt-5 font-semibold text-white "
+              >
                 {formik.isSubmitting ? (
                   <div className="h-5 w-5 rounded-full border-4 border-t-4 border-white border-t-transparent animate-spin mx-auto"></div>
                 ) : (
