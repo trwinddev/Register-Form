@@ -17,26 +17,26 @@ const RegisterFormik = () => {
         }}
         validationSchema={Yup.object({
           username: Yup.string().required("Please enter your username"),
-          email: Yup.string()
-            .email("Please enter valid email address")
-            .required("Please enter your email address"),
-          password: Yup.string()
-            .min(8, "Your password must be at least 8 character")
-            .matches(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              {
-                message:
-                  "Your password at least 1 uppercase letter, 1 number,1 special character",
-              }
-            )
-            .required("Please enter your username"),
-          gender: Yup.string()
-            .required("Please select your gender")
-            .oneOf(["male", "female"], "You can only select male or female"),
-          job: Yup.string()
-            .required("Please select your job")
-            .oneOf(["teacher", "developer", "doctor"]),
-          term: Yup.boolean().required("Please check the term"),
+          // email: Yup.string()
+          //   .email("Please enter valid email address")
+          //   .required("Please enter your email address"),
+          // password: Yup.string()
+          //   .min(8, "Your password must be at least 8 character")
+          //   .matches(
+          //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+          //     {
+          //       message:
+          //         "Your password at least 1 uppercase letter, 1 number,1 special character",
+          //     }
+          //   )
+          //   .required("Please enter your username"),
+          // gender: Yup.string()
+          //   .required("Please select your gender")
+          //   .oneOf(["male", "female"], "You can only select male or female"),
+          // job: Yup.string()
+          //   .required("Please select your job")
+          //   .oneOf(["teacher", "developer", "doctor"]),
+          // term: Yup.boolean().required("Please check the term"),
         })}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -55,8 +55,15 @@ const RegisterFormik = () => {
               <label htmlFor="username" className="cursor-pointer">
                 Username
               </label>
-              <InputFormik></InputFormik>
-              <p className="text-sm text-red-500">Error</p>
+              <input
+                type="text"
+                className="p-4 border border-gray-100 rounded-lg bg-white outline-none transition-all focus:border-blue-500"
+                {...formik.getFieldProps.username}
+              />
+              {/* <InputFormik></InputFormik> */}
+              {formik.touched.username && formik.errors.username && (
+                <p className="text-sm text-red-500">{formik.errors.username}</p>
+              )}
             </div>
             <button className="w-full bg-blue-500 rounded-lg p-5 mt-5 font-semibold text-white ">
               {formik.isSubmitting ? (
